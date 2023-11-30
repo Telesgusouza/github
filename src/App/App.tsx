@@ -1,10 +1,23 @@
+import { Provider } from "react-redux"
+
+import InfoUser from "../components/InfoUser"
+import RepositoryList from "../components/RepositoryList"
+import Search from "../components/Search"
+import Title from "../components/Title"
+import ViewRepositories from "../components/ViewRepositories"
+
+import store from "../api/redux/store"
 
 function App() {
 
   return (
-    <>
-     <h1>iniciando projeto</h1>
-    </>
+    <Provider store={store} >
+     <Search />
+     <InfoUser />
+     <Title />
+     <RepositoryList />
+     <ViewRepositories />
+    </Provider>
   )
 }
 
