@@ -1,97 +1,90 @@
 import { useState } from "react";
 // import { useSelector } from "react-redux";
-// import actionsType from "../../api/redux/actionsType";
+import axios from "axios";
 
 import * as Styled from "./style";
 import bgImage from "../../assets/hero-image-github-profile.png";
 import imgSearch from "../../assets/Search.svg";
 import imgSpinner from "../../assets/spinner.svg";
-// import { IRootReducer } from "../../api/interface";
+// import { RootReducer } from "../../api/redux/store";
 
 export default function Search() {
   const [input, setInput] = useState<string>("");
 
-  const [listToggle] = useState<boolean>(false);
-  const [loading] = useState<boolean>(false);
+  const [listOptionRepo, setListOptionRepo] = useState<{
+    avatar: string;
+
+    title: string;
+    description: string;
+  } | null>(null);
+
+  const [listToggle, setListToggle] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   // const { listRepo } = useSelector(
-  //   (rootReducer: IRootReducer) => rootReducer.useListRepo
+  //   (rootReducer: RootReducer) => rootReducer.useListRepo
   // );
 
-  // console.log(listRepo)
+  // console.log(listRepo);
+
+  async function handleSearch(e: React.FormEvent) {
+    e.preventDefault();
+
+    if (input.trim().length > 0) {
+      setListToggle(true);
+      setLoading(true);
+
+      axios
+        .get(`https://api.github.com/users/${input}`)
+        .then((repo) => {
+          setListOptionRepo({
+            avatar: repo.data.avatar_url,
+
+            title: repo.data.name,
+            description: repo.data.bio,
+          });
+        })
+        .catch((err) => {
+          console.error("Error > " + err);
+          setListToggle(false);
+          setLoading(false);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
+  }
 
   return (
     <Styled.Container bgImage={bgImage}>
       <Styled.ContainerContent>
-        <Styled.Serch>
-          <img src={imgSearch} alt="" />
+        <Styled.Search onSubmit={handleSearch}>
+          <button type="submit">
+            <img src={imgSearch} alt="" />
+          </button>
           <input
             type="text"
             placeholder="Nome do usuário"
             value={input}
-            onChange={(e) => setInput(e.target.value)}
+            onChange={(e) => {
+              setInput(e.target.value);
+            }}
           />
-        </Styled.Serch>
+        </Styled.Search>
 
         {listToggle && (
           <Styled.MenuDropDown>
             <Styled.projectOptions>
-              <li>
-                <img src={bgImage} alt="avatar user" />
-                <div>
-                  <strong>
-                    GitHub Lorem, ipsum dolor sit amet consectetur adipisicing
-                    elit. Optio odio dignissimos minus rerum perferendis
-                    consequuntur harum beatae tempore odit velit nemo, rem, quae
-                    reprehenderit quidem quasi itaque. Esse, id dolores!{" "}
-                  </strong>
-                  <p>
-                    How people build software Lorem ipsum dolor sit amet,
-                    consectetur adipisicing elit. Officia quas doloremque non
-                    modi, corrupti, porro voluptate possimus ea repellat omnis
-                    totam recusandae. Magni, dignissimos fugiat modi odio iure
-                    impedit voluptas.
-                  </p>
-                </div>
-              </li>
-
-              <li>
-                <img src={bgImage} alt="avatar user" />
-                <div>
-                  <strong>
-                    GitHub Lorem, ipsum dolor sit amet consectetur adipisicing
-                    elit. Optio odio dignissimos minus rerum perferendis
-                    consequuntur harum beatae tempore odit velit nemo, rem, quae
-                    reprehenderit quidem quasi itaque. Esse, id dolores!{" "}
-                  </strong>
-                  <p>
-                    How people build software Lorem ipsum dolor sit amet,
-                    consectetur adipisicing elit. Officia quas doloremque non
-                    modi, corrupti, porro voluptate possimus ea repellat omnis
-                    totam recusandae. Magni, dignissimos fugiat modi odio iure
-                    impedit voluptas.
-                  </p>
-                </div>
-              </li>
-
-              <li>
-                <img src={bgImage} alt="avatar user" />
-                <div>
-                  <strong>
-                    GitHub Lorem, ipsum dolor sit amet consectetur adipisicing
-                    elit. Optio odio dignissimos minus rerum perferendis
-                    consequuntur harum beatae tempore odit velit nemo, rem, quae
-                    reprehenderit quidem quasi itaque. Esse, id dolores!{" "}
-                  </strong>
-                  <p>
-                    How people build software Lorem ipsum dolor sit amet,
-                    consectetur adipisicing elit. Officia quas doloremque non
-                    modi, corrupti, porro voluptate possimus ea repellat omnis
-                    totam recusandae. Magni, dignissimos fugiat modi odio iure
-                    impedit voluptas.
-                  </p>
-                </div>
-              </li>
+              {/* {listOptionRepo &&} */}
+              {listOptionRepo !== null && (
+                <li>
+                  <img src={listOptionRepo.avatar} alt="avatar user" />
+                  <div>
+                    <strong>{listOptionRepo.title}</strong>
+                    <p> {listOptionRepo.description}</p>
+                  </div>
+                </li>
+              )}
             </Styled.projectOptions>
 
             {loading && <Styled.ImgSpinner src={imgSpinner} alt="loading" />}

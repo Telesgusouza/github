@@ -25,7 +25,7 @@ export const ContainerContent = styled.div`
   position: relative;
 `;
 
-export const Serch = styled.form`
+export const Search = styled.form`
   width: 100%;
   max-width: 500px;
   margin: 0 auto;
@@ -56,9 +56,13 @@ export const Serch = styled.form`
     }
   }
 
-  img {
+  button {
+    cursor: pointer;
     position: absolute;
     left: 13px;
+
+    background-color: transparent;
+    border: none;
   }
 `;
 
@@ -78,89 +82,14 @@ export const ImgSpinner = styled.img`
   animation: loading 2s linear infinite;
 `;
 
-/*
-
-
 export const MenuDropDown = styled.menu`
   width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
-
-  position: absolute;
-  top: calc(100% + 12px);
-  
-  background-color: var(--gray);
-  padding: 20px;
-  
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
-
-  ul {
-    width: 100%;
-    padding: 5px;
-    background-color: blue;
-  }
-`;
-
-export const projectOption = styled.li`
-  max-width: 100%;
-  display: flex;
-  flex-direction: row;
-  color: white;
-
-  img {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 10px;
-  }
-
-  div {
-    flex: 1;
-    margin-left: 12px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background-color: red;
-  }
-
-  strong {
-    width: 100%;
-    max-width: calc(100% - 80px - 12px);
-
-    background-color: green;
-
-    font-weight: 500;
-    font-size: 1.25rem;
-
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  p {
-    font-weight: 400;
-    font-size: 0.75rem;
-    margin-top: 7px;
-
-    height: 45px;
-    overflow: hidden;
-  }
-`;
-
-
-*/
-
-export const MenuDropDown = styled.menu`
-  width: 100%;
-  padding: 20px;
+  padding: 8px;
   border-radius: 10px;
 
   position: absolute;
   top: calc(100% + 12px);
+  z-index: 99;
 
   display: flex;
   flex-direction: column;
@@ -169,7 +98,6 @@ export const MenuDropDown = styled.menu`
 `;
 
 export const projectOptions = styled.ul`
-
   li {
     display: flex;
     color: white;

@@ -1,6 +1,5 @@
-import { IActionRepoData, IListRepo } from "../../interface";
-import actionsType from "../actionsType";
-
+import { createSlice } from "@reduxjs/toolkit";
+import { IListRepo } from "../../interface";
 
 const initialState: { listRepo: IListRepo } = {
   listRepo: {
@@ -16,8 +15,15 @@ const initialState: { listRepo: IListRepo } = {
   },
 };
 
-export default function useListRepo(state: { listRepo: IListRepo } = initialState, action: IActionRepoData) {
-    if(action.type === actionsType.reloadData) {
-        return {...state, listRepo: action.payload}
-    }
-}
+export const useDataRepo = createSlice({
+  name: "list repo",
+  initialState,
+  reducers: {
+    listRepo: (state, action) => {
+      state.listRepo = action.payload;
+    },
+  },
+});
+
+export const { listRepo } = useDataRepo.actions;
+export default useDataRepo.reducer;
