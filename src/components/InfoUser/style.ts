@@ -13,6 +13,8 @@ export const Container = styled.main`
 
     margin-right: 10px;
 
+    background-color: #efefef;
+
     border: 8px solid var(--lightGray);
     border-radius: 15px;
     object-fit: cover;

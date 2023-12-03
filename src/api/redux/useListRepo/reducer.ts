@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IListRepo } from "../../interface";
+import { IDataUser, IRepo } from "../../interface";
 
-const initialState: { listRepo: IListRepo } = {
-  listRepo: {
+const initialState: { dataUser: IDataUser; listData: IRepo[] } = {
+  dataUser: {
     avatar: null,
     followers: 0,
     following: 0,
@@ -10,20 +10,23 @@ const initialState: { listRepo: IListRepo } = {
 
     title: "",
     description: "",
-
-    listData: [],
   },
+
+  listData: [],
 };
 
 export const useDataRepo = createSlice({
   name: "list repo",
   initialState,
   reducers: {
-    listRepo: (state, action) => {
-      state.listRepo = action.payload;
+    dataUser: (state, action) => {
+      state.dataUser = action.payload;
+    },
+    listData: (state, action) => {
+      state.listData = action.payload;
     },
   },
 });
 
-export const { listRepo } = useDataRepo.actions;
+export const { dataUser, listData } = useDataRepo.actions;
 export default useDataRepo.reducer;

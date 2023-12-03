@@ -1,11 +1,18 @@
 import { useState } from "react";
 import * as Styled from "./style";
 
-import imgTest from "../../assets/hero-image-github-profile.png";
+import imgNoUser from "../../assets/noUser.webp";
+import { useSelector } from "react-redux";
+import { RootReducer } from "../../api/redux/store";
 
 export default function InfoUser() {
   const [loading] = useState<boolean>(false);
   const [option, setOption] = useState<[string, number | string]>(["all", 0]);
+
+  const { dataUser } = useSelector(
+    (rootReducer: RootReducer) => rootReducer.useListRepo
+  );
+
 
   function handleOption(title: string, description: string | number) {
     setOption([title, description]);
@@ -19,25 +26,33 @@ export default function InfoUser() {
         </>
       ) : (
         <>
-          <img src={imgTest} alt="avatar" />
+
+        {dataUser.avatar ? (
+            <img src={`${dataUser.avatar}`} alt="avatar" />
+          ) : (
+            <>
+              <img src={imgNoUser} alt="avatar" />
+            </>
+          )}
+          
         </>
       )}
 
       {option[0] === "all" ? (
         <ul>
-          <li onClick={() => handleOption("Followers", 27839)}>
+          <li onClick={() => handleOption("Followers", dataUser.followers)}>
             <p>Followers</p>
-            <strong>27839</strong>
+            <strong>{dataUser.followers}</strong>
           </li>
 
-          <li onClick={() => handleOption("Following", 0)}>
+          <li onClick={() => handleOption("Following", dataUser.followers)}>
             <p>Following</p>
-            <strong>0</strong>
+            <strong>{dataUser.followers}</strong>
           </li>
 
-          <li onClick={() => handleOption("location", "San Francisco, CA")}>
+          <li onClick={() => handleOption("location", dataUser.location)}>
             <p>location</p>
-            <strong>San Francisco, CA</strong>
+            <strong>{dataUser.location}</strong>
           </li>
         </ul>
       ) : (

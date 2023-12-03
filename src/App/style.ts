@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-export const Container = styled.footer`
-  padding: 46px 20px 80px 20px;
+export const ViewRepositories = styled.footer`
+padding: 46px 20px 80px 20px;
   text-align: center;
 
   strong {
@@ -28,8 +28,7 @@ export const Container = styled.footer`
 
     &:hover::after {
       left: -8px;
-      /* width: calc(100% ) 100%; */
       width: calc(100% + 16px);
     }
   }
-`;
+`
